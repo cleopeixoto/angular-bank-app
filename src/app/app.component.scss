@@ -1,0 +1,27 @@
+.app-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  .menu {
+    background-color: lightgray;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+
+    .home {
+      color: black;
+      // margin: 15px;
+      padding: 15px;
+      text-transform: uppercase;
+      text-decoration: none;
+      // font-weight: 600;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .app-content {
+    margin: 30px 50px;
+  }
+}

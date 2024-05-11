@@ -1,6 +1,9 @@
 @import "../../../styles.scss";
 
 .client-details-container {
+  display: flex;
+  justify-content: center;
+
   .client-form {
     padding: 20px;
 
@@ -21,7 +24,6 @@
     .form-footer {
       display: flex;
       flex-direction: column;
-      align-items: center;
 
       .new-client-account-message {
         margin: 0 0 10px;

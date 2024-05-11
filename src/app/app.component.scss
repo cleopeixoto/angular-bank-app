@@ -1,7 +1,6 @@
 @import "../styles.scss";
 
 .app-container {
-
   .menu {
     background-color: $dark-red;
     display: flex;
@@ -24,6 +23,6 @@
   }
 
   .app-content {
-    margin: 30px 40px;
+    margin: 50px 40px;
   }
 }

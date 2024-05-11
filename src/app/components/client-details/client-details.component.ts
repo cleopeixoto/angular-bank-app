@@ -60,10 +60,10 @@ export class ClientDetailsComponent implements OnInit {
     if (!currentClient) console.error('Client not found')  // Handle error
 
     this.clientForm.setValue({
-      name: currentClient?.name || '',
-      email: currentClient?.email || '',
-      age: currentClient?.age || '',
-      accountNumber: currentClient?.account?.accountNumber || '',
+      name: currentClient?.name ?? '',
+      email: currentClient?.email ?? '',
+      age: currentClient?.age ?? '',
+      accountNumber: currentClient?.accountNumber ?? '',
     });
   }
 

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IClient } from '../interfaces/IClient';
-import { clients } from '../clientsMock';
+import { clients } from '../mockups/clients';
 import { AccountService } from './account.service';
+import { generateId } from '../components/utils';
 
 /**
  * Interface of a Client Data Object - used to POST and PUT requests
@@ -19,7 +20,7 @@ interface IClientData {
   providedIn: 'root'
 })
 export class ClientService {
-  clients: IClient[] = clients;
+  clients: IClient[] = [];
 
   constructor(
     private accountService: AccountService
@@ -30,6 +31,7 @@ export class ClientService {
    * @returns List of current clients
    */
   getClients() {
+    this.clients = clients;
     return this.clients;
   }
 
@@ -39,7 +41,6 @@ export class ClientService {
    * @returns The client object
    */
   getClient(id: number) {
-    console.log('clientId', id);
     return this.clients.find((client) => client.id === id);
   }
 
@@ -48,7 +49,6 @@ export class ClientService {
    * @param data The data information of the new client
    * @returns The new client object
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createClient(clientData: IClientData) {
     const newClientObj = this.handleCreation();
     const newClient = {
@@ -65,30 +65,17 @@ export class ClientService {
    * @param data 
    */
   handleCreation() {
-    // Simulate creation of a new client id and a new account id (according to biggest value)
-    const clientIds = this.clients.map((client) => client.id);
-    const newClientId = Math.max(...clientIds);
+    // Simulate creation of a new client id and a related account
+    const newClientId = generateId(this.clients);
+    const newAccount = this.accountService.createAccount(newClientId);
 
-    const accountIds = this.accountService.accounts.map((account) => account.id);
-    const newAccountId = Math.max(...accountIds);
-
-    // Simulate a new account with no money yet
-    const newAccount = {
-      id: newAccountId,
-      accountNumber: this.accountService.generateAccountNumber(),
-      balance: 0,
-      status: 'positive',
-    }
-
-    // Create a New Account
-    return { id: newClientId, account: newAccount };
+    return { id: generateId(this.clients), accountNumber: newAccount.accountNumber };
   }
 
   /**
    * Update a client, simulating a PUT request to the API
    * @param data The data information to be overriten
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updateClient(clientId: number, clientData: IClientData) {
     const client = this.getClient(clientId);
     if (!client) return;
@@ -106,6 +93,6 @@ export class ClientService {
    */
   deleteClient(id: number): void {
     const inx = this.clients.findIndex((client) => client.id === id);
-    if (inx) this.clients.splice(inx, 1);
+    if (inx >= 0) this.clients.splice(inx, 1);
   }
 }

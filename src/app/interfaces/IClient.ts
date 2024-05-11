@@ -1,5 +1,3 @@
-import { IAccount } from "./IAccount";
-
 /**
  * Interface of a Client
  */
@@ -8,5 +6,5 @@ export interface IClient {
   name: string;
   email: string;
   age: number | string;
-  account?: IAccount;
+  accountNumber: string;
 }

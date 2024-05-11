@@ -12,15 +12,15 @@
           </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let client of clients">
+          <tr *ngFor="let client of sortedClients()">
               <td>{{client.name}}</td>
               <td>{{client.email}}</td>
               <td>{{client.age}}</td>
               <div class="actions">
-                <td [routerLink]="[client.id, 'details']" class="action-icon view">
+                <td (click)="goToClientDetails(client.id)" class="action-icon view">
                   <i class="fa fa-eye"></i>
                 </td>
-                <td (onClick)="confirmDelete(client.id)" class="action-icon delete">
+                <td (click)="confirmDelete(client.id)" class="action-icon delete">
                   <i class="fa fa-trash"></i>
                 </td>
               </div>

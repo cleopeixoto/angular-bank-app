@@ -1,23 +1,23 @@
 <div class="client-details-container">
 
   <!-- New client form -->
-  <div class="client-form card">
+  <div class="client-form card col-12 col-lg-6">
     <div class="form-title">
       <span *ngIf="!clientId">New client</span>
       <span *ngIf="clientId">Client information</span>
     </div>
 
     <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
-        <div class="input-group row">
-          <mat-form-field class="col-12 col-lg-8">
+        <div class="input-group">
+          <mat-form-field class="col-12">
             <mat-label>Name</mat-label>
             <input matInput type="text" formControlName="name" [max]="200" required>
             <mat-error *ngIf="!clientForm.controls['name'].value">Name is required</mat-error>
           </mat-form-field>
         </div>
 
-        <div class="input-group row">
-          <mat-form-field ngbAutofocus class="col-12 col-lg-8">
+        <div class="input-group">
+          <mat-form-field ngbAutofocus class="col-12">
             <mat-label>Email</mat-label>
             <input type="email" formControlName="email" matInput required/>
             <mat-hint>Type a valid email address</mat-hint>
@@ -26,8 +26,8 @@
           </mat-form-field>
         </div>
 
-        <div class="input-group row">
-          <mat-form-field class="col-12 col-lg-8">
+        <div class="input-group">
+          <mat-form-field class="col-12">
             <mat-label>Age</mat-label>
             <input matInput type="number" formControlName="age" [min]="1" [max]="120">
           </mat-form-field>
@@ -35,16 +35,16 @@
 
         
 
-        <div class="form-footer row" *ngIf="!clientId">
-          <mat-error class="col-12 col-lg-8" *ngIf="hasCustomError">
+        <div class="form-footer" *ngIf="!clientId">
+          <mat-error *ngIf="hasCustomError">
             Please, review the form and try again.
           </mat-error>
 
-          <div class="new-client-account-message col-12 col-lg-8">
+          <div class="new-client-account-message">
             Once you you submit the form, a bank account will be created.
           </div>
 
-          <div class="buttons col-12 col-lg-8">
+          <div class="buttons">
             <button type="button" class="btn secondary-btn" (click)="onCancel()">Cancel</button>
             <button type="submit" class="btn primary-btn" [disabled]="clientForm.invalid">Submit</button>
           </div>

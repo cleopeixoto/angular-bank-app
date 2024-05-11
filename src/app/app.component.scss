@@ -1,27 +1,29 @@
+@import "../styles.scss";
+
 .app-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   .menu {
-    background-color: lightgray;
+    background-color: $dark-red;
     display: flex;
     flex-direction: row;
     justify-content: end;
+    height: 50px;
+    align-items: center;
 
     .home {
-      color: black;
-      // margin: 15px;
+      margin: 0 15px 0;
       padding: 15px;
+      color: white;
       text-transform: uppercase;
       text-decoration: none;
-      // font-weight: 600;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.4);
       }
     }
   }
 
   .app-content {
-    margin: 30px 50px;
+    margin: 30px 40px;
   }
 }

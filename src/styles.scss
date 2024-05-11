@@ -1,3 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins');
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+$dark-red: #e1183f;
+$gray1: #ebebeb;
+$gray1: #e4e5e9;
+
+* {
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'FontAwesome';
+}
+
 body {
   margin: 0;
+}
+
+.btn {
+  min-width: fit-content;
+  width: 120px;
+  height: 40px;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  letter-spacing: 1.2px;
+  line-height: 14px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.17);
+  cursor: pointer !important;
+}
+
+.primary-btn {
+  background-color: $dark-red !important;
+  color: white !important;
+}
+
+.secondary-btn {
+  background-color: white !important;
+  color: $gray1;
+}
+
+.card {
+  padding: 15px;
+  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.06);
 }

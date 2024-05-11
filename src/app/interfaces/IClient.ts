@@ -1,9 +1,12 @@
-// import { IAccount } from "../account/IAccount";
+import { IAccount } from "./IAccount";
 
+/**
+ * Interface of a Client
+ */
 export interface IClient {
   id: number;
   name: string;
   email: string;
-  age: number;
-  // account: IAccount;
+  age: number | string;
+  account?: IAccount;
 }

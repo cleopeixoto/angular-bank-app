@@ -1,0 +1,74 @@
+@import "../../../styles.scss";
+
+.client-details-container {
+  .client-form {
+    padding: 20px;
+
+    .form-title {
+      margin: 0 0 20px;
+      font-size: 20px;
+    }
+
+    // .form-fields {
+    // }
+
+    .input-group {
+      display: flex;
+      justify-content: center;
+      margin: 15px 0;
+    }
+
+    .form-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .new-client-account-message {
+        margin: 0 0 10px;
+        font-size: 14px;
+      }
+
+      .buttons {
+        margin: 20px 0;
+        display: flex;
+        justify-content: end;
+        gap: 20px;
+      }
+    }
+    
+    mat-error {
+      color: $dark-red;
+      opacity: 90%;
+    }
+
+    mat-hint, mat-error {
+      font-size: 12px;
+    }
+  }
+}
+
+.form-control:focus{
+  box-shadow: none;
+}
+
+
+::ng-deep {
+  .mat-mdc-form-field {
+    padding: 0 !important;
+  }
+
+  .mat-mdc-text-field-wrapper,
+  .mat-mdc-form-field-hint-wrapper,
+  .mat-mdc-form-field-error-wrapper {
+    padding: 0 0 0 5px !important;
+  }
+
+  .mat-mdc-form-field-flex {
+    margin-top: 25px !important;
+    padding-bottom: 6px;
+  }
+
+  .mat-mdc-floating-label {
+    margin-top: 5px !important;
+  }
+}

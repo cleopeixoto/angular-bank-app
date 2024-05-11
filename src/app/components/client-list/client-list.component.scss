@@ -1,0 +1,50 @@
+@import "../../../styles.scss";
+
+.clients-container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+
+  .clients-table {
+    overflow-x: auto;
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+
+      th, td {
+        border: none;
+        text-align: start;
+        padding: 10px;
+      }
+
+      thead {
+        background-color: $dark-red !important;
+        color: white;
+      }
+
+      tbody {
+        tr {
+          &:nth-child(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+          }
+        }
+
+        .actions {
+          .action-icon {
+          }
+        }
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .new-btn {
+    align-self: self-end;
+    cursor: pointer;
+  }
+}

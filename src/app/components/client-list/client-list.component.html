@@ -1,18 +1,31 @@
-<div>
-  <table class="table table-hover">
-    <th>
-        <tr>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Age</td>
-        </tr>
-    </th>
-    <tbody>
-        <tr *ngFor="let client of clients">
-            <td>{{client.name}}</td>
-            <td>{{client.email}}</td>
-            <td>{{client.age}}</td>
-        </tr>
-    </tbody>
-  </table> 
+<div class="clients-container">
+  <button class="btn primary-btn new-btn" routerLink="/client/new">New client</button>
+
+  <div class="clients-table">
+    <table class="table table-hover">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Age</th>
+              <th colspan="2" class="actions">Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let client of clients">
+              <td>{{client.name}}</td>
+              <td>{{client.email}}</td>
+              <td>{{client.age}}</td>
+              <div class="actions">
+                <td [routerLink]="[client.id, 'details']" class="action-icon view">
+                  <i class="fa fa-eye"></i>
+                </td>
+                <td (onClick)="confirmDelete(client.id)" class="action-icon delete">
+                  <i class="fa fa-trash"></i>
+                </td>
+              </div>
+          </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -1,12 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientListComponent } from './components/client-list/client-list.component';
-import { ClientDetailComponent } from './components/client-detail/client-detail.component';
+import { ClientDetailsComponent } from './components/client-details/client-details.component';
+
+export const DEFAULT_ROUTE = '/home';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/main', pathMatch: 'full' },
-  { path: '', pathMatch: 'full', component: ClientListComponent },
-  { path: 'clients/:id', component: ClientDetailComponent },
+  { path: '', redirectTo: DEFAULT_ROUTE, pathMatch: 'full' },
+  { path: 'home', component: ClientListComponent },
+  { 
+    path: 'client',
+    children: [
+      { path: 'new', component: ClientDetailsComponent },
+      { path: ':id/details', component: ClientDetailsComponent },
+    ]
+   },
 ];
 
 @NgModule({

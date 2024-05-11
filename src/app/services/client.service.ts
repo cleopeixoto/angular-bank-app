@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IClient } from '../interfaces/IClient';
-import { clients } from '../mockups/clients';
 import { AccountService } from './account.service';
 import { generateId } from '../components/utils';
+import { clients } from '../mockups/clients';
 
 /**
  * Interface of a Client Data Object - used to POST and PUT requests

@@ -1,52 +1,98 @@
 <div class="client-details-container">
 
+  <div class="operations" *ngIf="clientMode !== clientModes.CREATE">
+    <div class="op-card card">
+      <i class="fa fa-money"></i>
+      <span>Check balance</span>
+    </div>
+    <div class="op-card card">
+      <div class="transfer-icons">
+        <i class="fa fa-long-arrow-left"></i>
+        <i class="fa fa-long-arrow-right"></i>
+      </div>
+      <span>Transfer money</span>
+    </div>
+    <div class="op-card card">
+      <i class="fa fa-plus-circle"></i>
+      <span>Add money</span>
+    </div>
+  </div>
+
   <!-- New client form -->
-  <div class="client-form card col-12 col-lg-6">
+  <div class="client-form card">
     <div class="form-title">
-      <span *ngIf="!clientId">New client</span>
-      <span *ngIf="clientId">Client information</span>
+      <span *ngIf="clientMode === clientModes.CREATE">New client</span>
+      <span *ngIf="[clientModes.READ, clientModes.UPDATE].includes(clientMode)">Client information</span>
     </div>
 
-    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="clientForm" [ngClass]="{'disable-editing': clientMode === clientModes.READ}">
         <div class="input-group">
-          <mat-form-field class="col-12">
+          <mat-form-field>
             <mat-label>Name</mat-label>
-            <input matInput type="text" formControlName="name" [max]="200" required>
+            <input matInput type="text" formControlName="name" [max]="200" required [readonly]="clientMode === clientModes.READ">
             <mat-error *ngIf="!clientForm.controls['name'].value">Name is required</mat-error>
           </mat-form-field>
         </div>
 
         <div class="input-group">
-          <mat-form-field ngbAutofocus class="col-12">
+          <mat-form-field ngbAutofocus>
             <mat-label>Email</mat-label>
-            <input type="email" formControlName="email" matInput required/>
-            <mat-hint>Type a valid email address</mat-hint>
+            <input type="email" formControlName="email" matInput required [readonly]="clientMode === clientModes.READ" (ngModelChange)="onEmailChange($event)">
+            <mat-hint *ngIf="clientMode !== clientModes.READ">Type a valid email address</mat-hint>
             <mat-error *ngIf="!clientForm.controls['email'].value">Email field is required</mat-error>
             <mat-error *ngIf="!!clientForm.controls['email'].value && clientForm.controls['email'].errors">Email is invalid</mat-error>
+            <mat-error *ngIf="customErrors.existingClient">E-mail already exists</mat-error>
           </mat-form-field>
         </div>
 
         <div class="input-group">
-          <mat-form-field class="col-12">
+          <mat-form-field>
             <mat-label>Age</mat-label>
-            <input matInput type="number" formControlName="age" [min]="1" [max]="120">
+            <input matInput type="number" formControlName="age" [min]="1" [max]="120" [readonly]="clientMode === clientModes.READ">
           </mat-form-field>
         </div>
 
-        
+        <div class="input-group disable-editing" *ngIf="clientMode !== clientModes.CREATE">
+          <mat-form-field>
+            <mat-label>Account number</mat-label>
+            <input matInput type="text" formControlName="accountNumber" [min]="1" [max]="120" readonly>
+          </mat-form-field>
+        </div>
 
-        <div class="form-footer" *ngIf="!clientId">
-          <mat-error *ngIf="hasCustomError">
-            Please, review the form and try again.
-          </mat-error>
 
-          <div class="new-client-account-message">
+        <div class="form-footer">
+          <mat-error *ngIf="customErrors.invalidForm">Please, review the form and try again.</mat-error>
+
+          <div class="new-client-account-message" *ngIf="clientMode === clientModes.CREATE">
             Once you you submit the form, a bank account will be created.
           </div>
 
           <div class="buttons">
-            <button type="button" class="btn secondary-btn" (click)="onCancel()">Cancel</button>
-            <button type="submit" class="btn primary-btn" [disabled]="clientForm.invalid">Submit</button>
+            <button type="button" class="btn secondary-btn" (click)="onCancel()">
+              <i class="fa fa-rotate-left"></i>
+              <span *ngIf="clientMode !== clientModes.UPDATE">Cancel</span>
+              <span *ngIf="clientMode === clientModes.UPDATE">Return</span>
+            </button>
+
+            <button type="submit" class="btn primary-btn" *ngIf="clientMode === clientModes.CREATE" 
+              [disabled]="clientForm.invalid || hasCustomErrors"
+              (click)="onSubmit()"
+            >
+              <span>Create</span>
+            </button>
+            <button type="button" class="btn primary-btn" *ngIf="clientMode === clientModes.READ"
+              (click)="clientMode = clientModes.UPDATE"
+            >
+              <i class="fa fa-edit"></i>
+              <span>Edit</span>
+            </button>
+            <button type="submit" class="btn primary-btn"*ngIf="clientMode === clientModes.UPDATE" 
+              [disabled]="clientForm.invalid || hasCustomErrors || (clientMode === clientModes.UPDATE && clientForm.untouched)"
+              (click)="onSubmit()"
+            >
+              <i class="fa fa-floppy-o"></i>
+              <span>Save</span>
+          </button>
           </div>
         </div>
     </form>

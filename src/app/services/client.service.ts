@@ -24,14 +24,15 @@ export class ClientService {
 
   constructor(
     private accountService: AccountService
-  ) { }
+  ) {
+    this.clients = clients;
+  }
 
   /**
    * Get all clients, simulating a GET request to the API
    * @returns List of current clients
    */
   getClients() {
-    this.clients = clients;
     return this.clients;
   }
 
@@ -41,7 +42,7 @@ export class ClientService {
    * @returns The client object
    */
   getClient(id: number) {
-    return this.clients.find((client) => client.id === id);
+    return this.clients.find((client) => client.id === Number(id));
   }
 
   /**

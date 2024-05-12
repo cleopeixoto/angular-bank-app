@@ -6,7 +6,10 @@
   gap: 50px;
 
   .clients-table {
-    overflow-x: auto;
+    overflow-x: scroll;
+    max-height: 60vh;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.17);
+    border-radius: 5px;
 
     table {
       border-collapse: collapse;
@@ -19,8 +22,26 @@
       }
 
       thead {
+        position: sticky;
+        top: 0;
         background-color: $dark-red !important;
         color: white;
+
+        th {
+          .fa {
+            margin-left: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+
+            &:hover {
+              color: white;
+            }
+          }
+
+          .current-sort {
+            color: white;
+          }
+        }
       }
 
       tbody {

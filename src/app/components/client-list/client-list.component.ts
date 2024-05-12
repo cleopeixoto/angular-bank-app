@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ClientListComponent implements OnInit {
   clients: IClient[] = [];
+  currentSortField = 'name';
 
   constructor(
     private router: Router,
@@ -18,30 +19,41 @@ export class ClientListComponent implements OnInit {
 
   ngOnInit() {
     this.clients = this.clientService.getClients();
+    this.sortBy('name');
   }
 
   /**
-   * Sort clients alphabetically
+   * Sort clients array based on a given property (field)
+   * @param field Given field to sort based on
    */
-  sortedClients() {
-    return this.clients.sort((clientA, clientB) => {
-      const nameA = clientA.name.toUpperCase();
-      const nameB = clientB.name.toUpperCase();
+  sortBy(field: string) {
+    this.currentSortField = field;
 
-      if (nameA > nameB) return 1;
-      if (nameA < nameB) return -1;
+    this.clients.sort((clientA, clientB) => {
+      let keyA = clientA[field];
+      let keyB = clientB[field];
+
+      if (typeof keyA === 'string') keyA = keyA.toUpperCase();
+      if (typeof keyB === 'string') keyB = keyB.toUpperCase();
+
+      if (keyA > keyB) return 1;
+      if (keyA < keyB) return -1;
       return 0; // equals
     });
   }
 
   /**
-   * Delete a client, with a pop-up
+   * Delete a client
    * @param id Client id
    */
   confirmDelete(id: number) {
     this.clientService.deleteClient(id);
   }
 
+  /**
+   * Go to Client Details page
+   * @param clientId The ID of the client
+   */
   goToClientDetails(clientId: number) {
     this.router.navigate([`client/${clientId}/details`]).then();
   }

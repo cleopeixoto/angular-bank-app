@@ -3,9 +3,65 @@
 .client-details-container {
   display: flex;
   justify-content: center;
+  gap: 50px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .operations {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+
+    .op-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      width: 10vh;
+      height: 10vh;
+      background-color: $dark-red;
+      color: white;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 80%;
+      }
+
+      i {
+        font-size: 40px;
+      }
+
+      span {
+        font-size: 15px;
+      }
+
+      .transfer-icons {
+        display: flex;
+        flex-direction: column;
+
+        i {
+          font-size: 25px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
 
   .client-form {
+    display: flex;
+    flex-direction: column;
     padding: 20px;
+    width: -webkit-fill-available;
+
+    @media screen and (min-width: 768px) {
+      max-width: 500px;
+    }
 
     .form-title {
       margin: 0 0 20px;
@@ -19,6 +75,10 @@
       display: flex;
       justify-content: center;
       margin: 15px 0;
+
+      mat-form-field {
+        width: -webkit-fill-available;
+      }
     }
 
     .form-footer {
@@ -35,6 +95,22 @@
         display: flex;
         justify-content: end;
         gap: 20px;
+
+        .btn {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+
+          span {
+            font-size: 15px;
+          }
+  
+          .fa {
+            font-size: 15px;
+            font-weight: bold;
+          }
+        }
       }
     }
     
@@ -55,6 +131,12 @@
 
 
 ::ng-deep {
+  .disable-editing {
+    .mdc-line-ripple {
+      display: none;
+    }
+  }
+
   .mat-mdc-form-field {
     padding: 0 !important;
   }

@@ -15,14 +15,15 @@ export enum AccountStatus {
 export class AccountService {
   accounts: IAccount[] = [];
 
-  constructor() { }
+  constructor() {
+    this.accounts = accounts;
+  }
 
   /**
    * Get all client accounts, simulating a GET request to the API
    * @returns List of current accounts
    */
   getAccounts(): IAccount[] {
-    this.accounts = accounts;
     return this.accounts;
   }
 

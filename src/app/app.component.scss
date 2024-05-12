@@ -25,4 +25,12 @@
   .app-content {
     margin: 50px 40px;
   }
+
+  .app-footer {
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    height: 150px;
+    background-color: #404040;
+  }
 }

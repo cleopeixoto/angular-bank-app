@@ -5,14 +5,29 @@
     <table class="table table-hover">
       <thead>
           <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Age</th>
-              <th colspan="2" class="actions">Actions</th>
+              <th>
+                <span>Account #</span>
+                <i class="fa fa-sort" [ngClass]="{'current-sort': currentSortField === 'accountNumber'}" (mouseup)="sortBy('accountNumber')"></i>
+              </th>
+              <th>
+                <span>Name</span>
+                <i class="fa fa-sort" [ngClass]="{'current-sort': currentSortField === 'name'}" (mouseup)="sortBy('name')"></i>
+              </th>
+              <th>
+                <span>Email</span>
+              </th>
+              <th>
+                <span>Age</span>
+                <i class="fa fa-sort" [ngClass]="{'current-sort': currentSortField === 'age'}" (mouseup)="sortBy('age')"></i>
+              </th>
+              <th colspan="2" class="actions">
+                <span>Actions</span>
+              </th>
           </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let client of sortedClients()">
+          <tr *ngFor="let client of clients">
+              <td>{{client.accountNumber}}</td>
               <td>{{client.name}}</td>
               <td>{{client.email}}</td>
               <td>{{client.age}}</td>

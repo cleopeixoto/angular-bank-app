@@ -5,7 +5,8 @@
 ## Setup
     $ npm install
 
-  Install Angular Cli, if you don't have it
+  Install Angular Cli, if you don't have it.
+
     $ sudo npm install -g @angular/cli
 
 

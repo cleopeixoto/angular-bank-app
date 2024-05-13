@@ -114,7 +114,7 @@ export class AccountTransactionComponent implements OnInit {
 
     if (updatedAccount) {
       displayNotification.subtitle = this.transactionType === transactionTypes.addMoney 
-        ? 'Your money was successfull added!' : `Your money was successfully transfered to account #${data.selectedAccountNumber}!`;
+        ? 'Your money was successfully added!' : `Your money was successfully transfered to account #${data.selectedAccountNumber}!`;
     } else {
       displayNotification.subtitle = 'Something went wrong with your transaction';
     }

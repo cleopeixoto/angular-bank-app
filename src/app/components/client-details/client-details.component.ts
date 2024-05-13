@@ -130,8 +130,6 @@ export class ClientDetailsComponent implements OnInit {
    * Action when canceling a transaction
    */
   onCancel(): void {
-    this.clientForm.reset();
-
     if (this.clientMode === this.clientModes.UPDATE) {
       this.clientMode = this.clientModes.READ;
       this.clientForm.markAsUntouched();
@@ -140,8 +138,7 @@ export class ClientDetailsComponent implements OnInit {
       this.clientForm.controls['name'].setValue(this.currentClient.name);
       this.clientForm.controls['email'].setValue(this.currentClient.email);
       this.clientForm.controls['age'].setValue(this.currentClient.age);
-    }
-    else this.location.back();
+    } else this.location.back();
   }
 
   /**

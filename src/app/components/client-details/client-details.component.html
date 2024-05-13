@@ -48,8 +48,11 @@
         <div class="input-group">
           <mat-form-field>
             <mat-label>Email</mat-label>
-            <input type="email" formControlName="email" matInput required [readonly]="clientMode === clientModes.READ" (ngModelChange)="onEmailChange($event)">
-            <mat-hint *ngIf="clientMode !== clientModes.READ">Type a valid email address</mat-hint>
+            <input type="email" formControlName="email" matInput required 
+              [readonly]="clientMode === clientModes.READ"
+              [placeholder]="clientMode !== clientModes.READ ? 'Type a valid email' : ''"
+              (ngModelChange)="onEmailChange($event)"
+            >
             <mat-error *ngIf="!clientForm.controls['email'].value">Email field is required</mat-error>
             <mat-error *ngIf="!!clientForm.controls['email'].value && clientForm.controls['email'].errors && !clientForm.controls['email'].hasError('existingEmail')">Email is invalid</mat-error>
             <mat-error *ngIf="clientForm.controls['email'].hasError('existingEmail')">E-mail already exists</mat-error>

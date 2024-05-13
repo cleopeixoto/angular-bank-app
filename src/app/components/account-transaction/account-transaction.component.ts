@@ -19,6 +19,7 @@ export class AccountTransactionComponent implements OnInit {
   transactionTypes = transactionTypes;
   availableClients!: IClient[];
   displayNotification: boolean | any = false;
+  accountDropdownOpened = false;
 
   accountForm: FormGroup = this.formBuilder.group({
     amount: [0, [Validators.required, Validators.min(0)]],
@@ -66,6 +67,15 @@ export class AccountTransactionComponent implements OnInit {
     if (this.transactionType === transactionTypes.transferMoney && amount > this.getBalance()) {
       this.accountForm.controls['amount'].setErrors({ balanceError: true });
     }
+  }
+
+  /**
+   * Close dropdown when clicking again on it (defect fix)
+   * @param dropdownElement 
+   */
+  onAccountChange(dropdownElement) {
+    this.accountDropdownOpened = !this.accountDropdownOpened;
+    if (!this.accountDropdownOpened) dropdownElement.close();
   }
 
   /**

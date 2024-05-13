@@ -69,7 +69,7 @@ export class ClientDetailsComponent implements OnInit {
   setCurrentFormValues(): void {
     const currentClient = this.clientService.getClient(this.clientId);
     if (!currentClient) {
-      console.error('Client not found')  // Handle error
+      console.error('Client not found')
       return;
     }
     

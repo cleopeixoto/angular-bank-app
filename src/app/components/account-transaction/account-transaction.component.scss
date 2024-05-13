@@ -1,8 +1,30 @@
+@import "../../../styles.scss";
+
 .transaction-container {
   .account-form {
     .form-title {
       margin: 0 0 20px;
       font-size: 20px;
+    }
+  }
+}
+
+::ng-deep {
+  .cdk-overlay-pane {
+    position: absolute;
+    top: 225px !important;
+    background-color: white;
+    border: 1px solid $gray3;
+  }
+
+  mat-option {
+    &:hover {
+      background-color: $gray6 !important;
+    }
+
+    .account-number {
+      position: absolute;
+      right: 20px;
     }
   }
 }

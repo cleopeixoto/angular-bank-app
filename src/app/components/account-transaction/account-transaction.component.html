@@ -6,13 +6,13 @@
     </div>
   
     <form [formGroup]="accountForm">
-      transactionType: {{ transactionType }}
       <div class="input-group" *ngIf="transactionType === transactionTypes.transferMoney">
-        <mat-form-field>
+        <mat-form-field (click)="onAccountChange(accountDropdown)">
           <mat-label>Select the account you want to transfer money: </mat-label>
-          <mat-select formControlName="selectedAccountNumber" required>
+          <mat-select #accountDropdown formControlName="selectedAccountNumber" required (valueChange)="onAccountChange(accountForm)">
               <mat-option *ngFor="let client of availableClients" [value]="client.accountNumber">
-                  {{ client.accountNumber }} ({{ client.name }})
+                {{ client.name }}
+                <span class="account-number">#{{ client.accountNumber }}</span>
               </mat-option>
           </mat-select>
         </mat-form-field> 

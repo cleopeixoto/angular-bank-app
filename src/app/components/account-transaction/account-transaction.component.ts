@@ -19,7 +19,7 @@ export class AccountTransactionComponent implements OnInit {
   transactionTypes = transactionTypes;
   availableClients!: IClient[];
   displayNotification: boolean | any = false;
-  accountDropdownOpened = false;
+  accountDropdownOpened = false; // Flag to handle dropdown opening
 
   accountForm: FormGroup = this.formBuilder.group({
     amount: [0, [Validators.required, Validators.min(0)]],
@@ -71,9 +71,9 @@ export class AccountTransactionComponent implements OnInit {
 
   /**
    * Close dropdown when clicking again on it (defect fix)
-   * @param dropdownElement 
+   * @param dropdownElement The dropdown element
    */
-  onAccountChange(dropdownElement) {
+  onAccountChange(dropdownElement: any) {
     this.accountDropdownOpened = !this.accountDropdownOpened;
     if (!this.accountDropdownOpened) dropdownElement.close();
   }

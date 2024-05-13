@@ -8,3 +8,8 @@ export interface IAccount {
   balance: number;
   status: string;
 }
+
+export const transactionTypes = {
+  addMoney: 'add',
+  transferMoney: 'transfer'
+}

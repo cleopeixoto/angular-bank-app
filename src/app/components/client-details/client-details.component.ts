@@ -22,6 +22,11 @@ export class ClientDetailsComponent implements OnInit {
     existingClient: false,
     invalidForm: false,
   };
+  triggerBalanceNotification = false;
+  operations = {
+    transferMoney: false,
+    addMoney: false,
+  }
 
   clientForm: FormGroup = this.formBuilder.group({
     name: ['', [Validators.required, Validators.maxLength(200)]],
@@ -149,4 +154,13 @@ export class ClientDetailsComponent implements OnInit {
   goToHome(): void {
     this.router.navigate(['/home']).then();
   }
+
+  /**
+   * Trigger the content according with the type of operation
+   * @param operationType the type of operation: add money or transfer money
+   */
+  onClickOperations(operationType: string): void {
+    Object.keys((this.operations)).forEach((operation) => {
+      this.operations[operation] = operation === operationType;
+    });  }
 }

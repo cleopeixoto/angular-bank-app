@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IClient } from '../interfaces/IClient';
+import { IClient } from '../interfaces/client';
 import { AccountService } from './account.service';
 import { generateId } from '../components/utils';
 import { clients } from '../mockups/clients';

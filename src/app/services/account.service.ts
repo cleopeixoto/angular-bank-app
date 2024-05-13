@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
-import { IAccount } from '../interfaces/IAccount';
+import { IAccount } from '../interfaces/account';
 import { generateId } from '../components/utils';
 import { accounts } from '../mockups/accounts';
 

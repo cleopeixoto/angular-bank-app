@@ -1,25 +1,32 @@
+<app-notification *ngIf="clientMode === clientModes.READ && triggerBalanceNotification" 
+  [accountNumber]="currentClient.accountNumber"
+  (closeNotification)="triggerBalanceNotification = false"
+>
+</app-notification>
+
 <div class="client-details-container">
 
+  <!-- Operations menu -->
   <div class="operations" *ngIf="clientMode !== clientModes.CREATE">
-    <div class="op-card card">
+    <div class="op-card card" (mouseup)="triggerBalanceNotification = true">
       <i class="fa fa-money"></i>
       <span>Check balance</span>
     </div>
-    <div class="op-card card">
+    <div class="op-card card" (mouseup)="onClickOperations('transferMoney')">
       <div class="transfer-icons">
         <i class="fa fa-long-arrow-left"></i>
         <i class="fa fa-long-arrow-right"></i>
       </div>
       <span>Transfer money</span>
     </div>
-    <div class="op-card card">
+    <div class="op-card card" (mouseup)="onClickOperations('addMoney')">
       <i class="fa fa-plus-circle"></i>
       <span>Add money</span>
     </div>
   </div>
 
-  <!-- New client form -->
-  <div class="client-form card">
+  <!-- Client form -->
+  <div class="client-form card" *ngIf="!operations.addMoney && !operations.transferMoney">
     <div class="form-title">
       <span *ngIf="clientMode === clientModes.CREATE">New client</span>
       <span *ngIf="[clientModes.READ, clientModes.UPDATE].includes(clientMode)">Client information</span>
@@ -96,5 +103,14 @@
           </div>
         </div>
     </form>
+  </div>
+
+  <div class="account-form card" *ngIf="operations.addMoney || operations.transferMoney">
+    <div class="form-title">
+      <span *ngIf="operations.addMoney">Add money to your account</span>
+      <span *ngIf="operations.transferMoney">Transfer money to another account</span>
+    </div>
+
+    <app-account-transaction *ngIf="operations.addMoney || operations.transferMoney"></app-account-transaction>
   </div>
 </div>

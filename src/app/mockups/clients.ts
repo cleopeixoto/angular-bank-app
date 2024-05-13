@@ -1,4 +1,4 @@
-import { IClient } from "../interfaces/IClient";
+import { IClient } from "../interfaces/client";
 
 /**
  * This is a MOCKUP from a list of clients in which the 'accountNumber' of each client is the foreign key for client's account

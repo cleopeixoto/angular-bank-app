@@ -1,0 +1,14 @@
+<div class="notification-container" [ngClass]="{ 'positive': isPositiveBalance, 'negative': !isPositiveBalance }" *ngIf="currentAccount">
+  <div class="notification-wrapper">
+    <div class="header">
+      <span class="title">Balance Information</span>
+      <i class="fa fa-close" (mouseup)="onClose()"></i>
+    </div>
+  
+    <div class="account-information">
+      <span class="balance">
+        {{ currentAccount.balance | currency }}
+      </span>
+    </div>
+  </div>
+</div>

@@ -3,8 +3,11 @@
   This is a project for an IBM challenge job. The goal was creating a bank application. The database is a JSON created by chatGPT.
 
 ## Setup
-
     $ npm install
+
+  Install Angular Cli, if you don't have it
+    $ sudo npm install -g @angular/cli
+
 
 ## Development server
     $ ng serve

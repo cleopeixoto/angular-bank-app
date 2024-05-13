@@ -58,12 +58,15 @@
       }
     }
 
-    .account-information {
+    .account-information, .subtitle {
       font-size: 14px;
       text-align: center;
 
       .balance {
         font-size: 25px;
+      }
+
+      .balance, span {
         font-weight: 600;
       }
     }

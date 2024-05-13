@@ -8,7 +8,12 @@ import { IAccount } from '../../interfaces/account';
   styleUrl: './notification.component.scss'
 })
 export class NotificationComponent implements OnInit {
-  @Input() accountNumber!: string;
+  @Input() genericNotification = false;
+  @Input() isSuccess = false;
+  @Input() title = '';
+  @Input() subtitle = '';
+
+  @Input() accountNumber = '';
   @Output() closeNotification: EventEmitter<any> = new EventEmitter();
 
   currentAccount!: IAccount;
@@ -19,7 +24,9 @@ export class NotificationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const account = this.accountService.getAccount(this.accountNumber);
+    if (!this.accountNumber) return;
+
+    const account = this.accountService.getAccountByNumber(this.accountNumber);
     if (account) {
       this.currentAccount = account;
       this.isPositiveBalance = this.currentAccount.status === 'positive';

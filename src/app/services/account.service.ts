@@ -32,7 +32,7 @@ export class AccountService {
    * @param accountNumber The number of the account
    * @returns The account
    */
-  getAccount(accountNumber: string) {
+  getAccountByNumber(accountNumber: string): IAccount | undefined {
     return this.accounts.find((account) => account.accountNumber === accountNumber);
   }
 
@@ -41,7 +41,7 @@ export class AccountService {
    * @param data The data information of the new client
    * @returns The new client object
    */
-  createAccount(clientId: number) {
+  createAccount(clientId: number): IAccount {
     // Simulate a new account with no money yet
     const newAccount = {
       id: generateId(this.accounts),
@@ -65,5 +65,34 @@ export class AccountService {
     newAccountNumber = newAccountNumber.replace('-', '');
 
     return newAccountNumber.substring(0, 5); // returns first 5 strings
+  }
+
+  /**
+   * Make an account transaction adding money to it, simulating a PUT request to the API
+   * @param accountId The account ID
+   * @param amount The amount to be added
+   */
+  addMoneyToAccount(accountId: number, amount: number): IAccount | undefined {
+    const account = this.accounts.find((account) => account.id === accountId);
+    if (!account) return;
+
+    account.balance += amount;
+    return account;
+  }
+
+  /**
+   * Transfer money from account to another
+   * @param currentAccount The current account that money will be taken
+   * @param accountToNumber The account number that will receive money
+   * @param amount The amount of value that will be transfered
+   */
+  transferMoneyAccount(currentAccount: IAccount, accountToNumber: string, amount: number): IAccount | undefined {
+    const accountTo = this.accounts.find((account) => account.accountNumber === accountToNumber);
+    if (!accountTo) return;
+
+    currentAccount.balance -= amount;
+    accountTo.balance += amount;
+
+    return currentAccount;
   }
 }

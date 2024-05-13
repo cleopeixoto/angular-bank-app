@@ -1,32 +1,36 @@
-<app-notification *ngIf="clientMode === clientModes.READ && triggerBalanceNotification" 
+<app-notification *ngIf="displayNotification" 
+  [genericNotification]="displayNotification.isGeneric"
+  [isSuccess]="displayNotification?.isSuccess"
+  [title]="displayNotification?.title"
+  [subtitle]="displayNotification?.subtitle"
   [accountNumber]="currentClient.accountNumber"
-  (closeNotification)="triggerBalanceNotification = false"
+  (closeNotification)="displayNotification = false"
 >
 </app-notification>
 
 <div class="client-details-container">
 
-  <!-- Operations menu -->
-  <div class="operations" *ngIf="clientMode !== clientModes.CREATE">
-    <div class="op-card card" (mouseup)="triggerBalanceNotification = true">
+  <!-- Transactions menu -->
+  <div class="transactions" *ngIf="clientMode !== clientModes.CREATE">
+    <div class="op-card card" (mouseup)="displayNotification = true">
       <i class="fa fa-money"></i>
       <span>Check balance</span>
     </div>
-    <div class="op-card card" (mouseup)="onClickOperations('transferMoney')">
+    <div class="op-card card" (mouseup)="onClickTransactions('transferMoney')">
       <div class="transfer-icons">
         <i class="fa fa-long-arrow-left"></i>
         <i class="fa fa-long-arrow-right"></i>
       </div>
       <span>Transfer money</span>
     </div>
-    <div class="op-card card" (mouseup)="onClickOperations('addMoney')">
+    <div class="op-card card" (mouseup)="onClickTransactions('addMoney')">
       <i class="fa fa-plus-circle"></i>
       <span>Add money</span>
     </div>
   </div>
 
   <!-- Client form -->
-  <div class="client-form card" *ngIf="!operations.addMoney && !operations.transferMoney">
+  <div class="client-form generic-form card" *ngIf="!transactions.addMoney && !transactions.transferMoney">
     <div class="form-title">
       <span *ngIf="clientMode === clientModes.CREATE">New client</span>
       <span *ngIf="[clientModes.READ, clientModes.UPDATE].includes(clientMode)">Client information</span>
@@ -42,13 +46,13 @@
         </div>
 
         <div class="input-group">
-          <mat-form-field ngbAutofocus>
+          <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="email" formControlName="email" matInput required [readonly]="clientMode === clientModes.READ" (ngModelChange)="onEmailChange($event)">
             <mat-hint *ngIf="clientMode !== clientModes.READ">Type a valid email address</mat-hint>
             <mat-error *ngIf="!clientForm.controls['email'].value">Email field is required</mat-error>
-            <mat-error *ngIf="!!clientForm.controls['email'].value && clientForm.controls['email'].errors">Email is invalid</mat-error>
-            <mat-error *ngIf="customErrors.existingClient">E-mail already exists</mat-error>
+            <mat-error *ngIf="!!clientForm.controls['email'].value && clientForm.controls['email'].errors && !clientForm.controls['email'].hasError('existingEmail')">Email is invalid</mat-error>
+            <mat-error *ngIf="clientForm.controls['email'].hasError('existingEmail')">E-mail already exists</mat-error>
           </mat-form-field>
         </div>
 
@@ -68,8 +72,6 @@
 
 
         <div class="form-footer">
-          <mat-error *ngIf="customErrors.invalidForm">Please, review the form and try again.</mat-error>
-
           <div class="new-client-account-message" *ngIf="clientMode === clientModes.CREATE">
             Once you you submit the form, a bank account will be created.
           </div>
@@ -82,7 +84,7 @@
             </button>
 
             <button type="submit" class="btn primary-btn" *ngIf="clientMode === clientModes.CREATE" 
-              [disabled]="clientForm.invalid || hasCustomErrors"
+              [disabled]="clientForm.invalid || hasCustomErrors()"
               (click)="onSubmit()"
             >
               <span>Create</span>
@@ -94,23 +96,22 @@
               <span>Edit</span>
             </button>
             <button type="submit" class="btn primary-btn"*ngIf="clientMode === clientModes.UPDATE" 
-              [disabled]="clientForm.invalid || hasCustomErrors || (clientMode === clientModes.UPDATE && clientForm.untouched)"
+              [disabled]="clientForm.invalid || hasCustomErrors() || (clientMode === clientModes.UPDATE && clientForm.untouched)"
               (click)="onSubmit()"
             >
               <i class="fa fa-floppy-o"></i>
               <span>Save</span>
-          </button>
+            </button>
           </div>
         </div>
     </form>
   </div>
 
-  <div class="account-form card" *ngIf="operations.addMoney || operations.transferMoney">
-    <div class="form-title">
-      <span *ngIf="operations.addMoney">Add money to your account</span>
-      <span *ngIf="operations.transferMoney">Transfer money to another account</span>
-    </div>
-
-    <app-account-transaction *ngIf="operations.addMoney || operations.transferMoney"></app-account-transaction>
+  <div class="account-form card" *ngIf="transactions.addMoney || transactions.transferMoney">
+    <app-account-transaction *ngIf="transactions.addMoney || transactions.transferMoney"
+      [currentAccount]="currentAccount"
+      [transactionType]="transactions.addMoney ? 'add' : 'transfer'"
+      (notifyParent)="endTransaction($event)"
+    ></app-account-transaction>
   </div>
 </div>

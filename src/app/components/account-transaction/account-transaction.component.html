@@ -1,1 +1,52 @@
-<p>account-transaction works!</p>
+<div class="transaction-container">
+  <div class="account-form generic-form">
+    <div class="form-title">
+      <span *ngIf="transactionType === transactionTypes.addMoney">Add money to your account</span>
+      <span *ngIf="transactionType === transactionTypes.transferMoney">Transfer money to another account</span>
+    </div>
+  
+    <form [formGroup]="accountForm">
+      transactionType: {{ transactionType }}
+      <div class="input-group" *ngIf="transactionType === transactionTypes.transferMoney">
+        <mat-form-field>
+          <mat-label>Select the account you want to transfer money: </mat-label>
+          <mat-select formControlName="selectedAccountNumber" required>
+              <mat-option *ngFor="let client of availableClients" [value]="client.accountNumber">
+                  {{ client.accountNumber }} ({{ client.name }})
+              </mat-option>
+          </mat-select>
+        </mat-form-field> 
+      </div>
+  
+      <div class="input-group">
+        <mat-form-field>
+          <mat-label>Amount:</mat-label>
+          <input matInput type="number" formControlName="amount" [min]="0" required placeholder="00.00" (blur)="onAmountChange()">
+          <mat-hint>Current balance: {{ getBalance() | currency }}</mat-hint>
+          <mat-error *ngIf="transactionType === transactionTypes.transferMoney && accountForm.controls['amount'].hasError('balanceError')">
+            You cannot transfer more than your current balance
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+  
+      <div class="form-footer">
+        <mat-error *ngIf="accountForm.invalid">Please, review the form and try again.</mat-error>
+  
+        <div class="buttons">
+          <button type="button" class="btn secondary-btn" (click)="onCancel()">
+            <i class="fa fa-rotate-left"></i>
+            <span>Cancel</span>
+          </button>
+  
+          <button type="submit" class="btn primary-btn" 
+            [disabled]="accountForm.invalid || accountForm.untouched"
+            (click)="onSubmit()"
+          >
+            <span>Create</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

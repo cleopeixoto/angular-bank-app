@@ -9,10 +9,10 @@ import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { ClientListComponent } from './components/client-list/client-list.component';
@@ -31,7 +31,7 @@ registerLocaleData(ptBr);
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatCheckboxModule,
+    MatSelectModule
   ],
   declarations: [
     AppComponent,

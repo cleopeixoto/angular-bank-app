@@ -10,7 +10,7 @@
     align-items: center;
   }
 
-  .operations {
+  .transactions {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -61,6 +61,7 @@
     flex-direction: column;
     padding: 20px;
     width: -webkit-fill-available;
+    height: fit-content;
 
     @media screen and (min-width: 768px) {
       max-width: 500px;
@@ -71,62 +72,6 @@
     .form-title {
       margin: 0 0 20px;
       font-size: 20px;
-    }
-
-    // .form-fields {
-    // }
-
-    .input-group {
-      display: flex;
-      justify-content: center;
-      margin: 15px 0;
-
-      mat-form-field {
-        width: -webkit-fill-available;
-      }
-    }
-
-    .form-footer {
-      display: flex;
-      flex-direction: column;
-
-      .new-client-account-message {
-        margin: 0 0 10px;
-        font-size: 14px;
-      }
-
-      .buttons {
-        margin: 20px 0;
-        display: flex;
-        justify-content: end;
-        gap: 20px;
-
-        .btn {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 10px;
-
-          span {
-            font-size: 15px;
-            text-transform: uppercase;
-          }
-  
-          .fa {
-            font-size: 15px;
-            font-weight: bold;
-          }
-        }
-      }
-    }
-    
-    mat-error {
-      color: $dark-red;
-      opacity: 90%;
-    }
-
-    mat-hint, mat-error {
-      font-size: 12px;
     }
   }
 }

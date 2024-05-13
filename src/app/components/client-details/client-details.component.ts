@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../services/client.service';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-client-details',
@@ -18,12 +19,13 @@ export class ClientDetailsComponent implements OnInit {
   }
   clientMode: number;
   currentClient: any;
+  currentAccount: any;
   customErrors = {
     existingClient: false,
     invalidForm: false,
   };
-  triggerBalanceNotification = false;
-  operations = {
+  displayNotification: boolean | any = false;
+  transactions = {
     transferMoney: false,
     addMoney: false,
   }
@@ -40,6 +42,7 @@ export class ClientDetailsComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private clientService: ClientService,
+    private accountService: AccountService,
     public location: Location
   ) {
     this.clientMode = this.clientModes.READ; // default option
@@ -57,6 +60,7 @@ export class ClientDetailsComponent implements OnInit {
     // Existing client
     this.clientId = id;
     this.setCurrentFormValues();
+    this.currentAccount = this.accountService.getAccountByNumber(this.currentClient.accountNumber);
   }
 
   /**
@@ -83,10 +87,7 @@ export class ClientDetailsComponent implements OnInit {
    * Submit form in order to creating a client or updating it
    */
   onSubmit(): void {
-    if (!this.clientForm.valid) {
-      this.customErrors.invalidForm = true;
-      return;
-    }
+    if (!this.clientForm.valid) return;
 
     // Get client form data
     const clientData = this.clientForm.value;
@@ -94,8 +95,8 @@ export class ClientDetailsComponent implements OnInit {
     // Create new client: send client data to POST
     if (this.clientMode === this.clientModes.CREATE) {
       delete clientData.accountNumber;  // Since it's a new client, the account will be post created
-      const newClient = this.clientService.createClient(clientData);
-      if (!newClient)
+      this.clientService.createClient(clientData);
+        
       this.goToHome();
       return;
     }
@@ -111,7 +112,10 @@ export class ClientDetailsComponent implements OnInit {
    */
   onEmailChange(email: string) {
     const existingEmail = this.clientService.clients.find((client) => client.email === email);
-    this.customErrors.existingClient = !!existingEmail;
+
+    // Updating form email control
+    if (!existingEmail) delete this.clientForm.controls['email'].errors?.['existingClient'];
+    else this.clientForm.controls['email'].setErrors({ existingEmail: true });
   }
 
   /**
@@ -123,18 +127,10 @@ export class ClientDetailsComponent implements OnInit {
   }
 
   /**
-   * Reset all custom errors
-   */
-  resetCustomErrors(): void {
-    this.customErrors.existingClient = false;
-    this.customErrors.invalidForm = false;
-  }
-
-  /**
-   * Action when canceling an operation
+   * Action when canceling a transaction
    */
   onCancel(): void {
-    this.resetCustomErrors();
+    this.clientForm.reset();
 
     if (this.clientMode === this.clientModes.UPDATE) {
       this.clientMode = this.clientModes.READ;
@@ -147,6 +143,17 @@ export class ClientDetailsComponent implements OnInit {
     }
     else this.location.back();
   }
+
+  /**
+   * Change transaction view to Client READ page view
+   */
+  endTransaction(notificationEvent: any): void {
+    this.displayNotification = notificationEvent;
+
+    this.transactions.addMoney = false;
+    this.transactions.transferMoney = false;
+    this.clientMode = this.clientModes.READ;
+  }
   
   /**
    * Go to home page, application default route
@@ -156,11 +163,11 @@ export class ClientDetailsComponent implements OnInit {
   }
 
   /**
-   * Trigger the content according with the type of operation
-   * @param operationType the type of operation: add money or transfer money
+   * Trigger the content according with the type of transaction
+   * @param transactionType the type of transaction: add money or transfer money
    */
-  onClickOperations(operationType: string): void {
-    Object.keys((this.operations)).forEach((operation) => {
-      this.operations[operation] = operation === operationType;
+  onClickTransactions(transactionType: string): void {
+    Object.keys((this.transactions)).forEach((transaction) => {
+      this.transactions[transaction] = transaction === transactionType;
     });  }
 }

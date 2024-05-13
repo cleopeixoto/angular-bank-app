@@ -1,14 +1,22 @@
-<div class="notification-container" [ngClass]="{ 'positive': isPositiveBalance, 'negative': !isPositiveBalance }" *ngIf="currentAccount">
+<div class="notification-container" [ngClass]="{ 
+  'positive': (genericNotification && isSuccess) || (!genericNotification && isPositiveBalance), 
+  'negative': (genericNotification && !isSuccess) || (!genericNotification && !isPositiveBalance) }" *ngIf="genericNotification || currentAccount"
+>
   <div class="notification-wrapper">
     <div class="header">
-      <span class="title">Balance Information</span>
+      <span class="title" *ngIf="title">{{ title }}</span>
+      <span class="title" *ngIf="!genericNotification && currentAccount">Balance Information</span>
       <i class="fa fa-close" (mouseup)="onClose()"></i>
     </div>
   
-    <div class="account-information">
+    <div class="account-information" *ngIf="!genericNotification && currentAccount">
       <span class="balance">
         {{ currentAccount.balance | currency }}
       </span>
+    </div>
+
+    <div class="subtitle" *ngIf="subtitle">
+      <span>{{ subtitle }}</span>
     </div>
   </div>
 </div>

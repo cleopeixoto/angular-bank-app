@@ -61,3 +61,60 @@ body {
   border-radius: 5px;
   border: 2px solid $gray5;
 }
+
+
+// Form styles
+.generic-form {
+  .input-group {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+  
+    mat-form-field {
+      width: -webkit-fill-available;
+    }
+  }
+  
+  .form-footer {
+    display: flex;
+    flex-direction: column;
+  
+    .new-client-account-message {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+  
+    .buttons {
+      margin: 20px 0;
+      display: flex;
+      justify-content: end;
+      gap: 20px;
+  
+      .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+  
+        span {
+          font-size: 15px;
+          text-transform: uppercase;
+        }
+  
+        .fa {
+          font-size: 15px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  
+  mat-error {
+    color: $dark-red;
+    opacity: 90%;
+  }
+  
+  mat-hint, mat-error {
+    font-size: 12px;
+  }
+}

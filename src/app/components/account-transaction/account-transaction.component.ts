@@ -79,6 +79,14 @@ export class AccountTransactionComponent implements OnInit {
   }
 
   /**
+   * Disable submit button according to conditions
+   * @returns A boolean value indicating if submit button should be disabled or not
+   */
+  disableSubmit(): boolean {
+    return this.accountForm.invalid || this.accountForm.untouched || Number(this.accountForm.controls['amount'].value) === 0;
+  }
+
+  /**
    * Notify parent of canceling transaction
    */
   onCancel(): void {

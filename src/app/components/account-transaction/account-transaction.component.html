@@ -40,10 +40,10 @@
           </button>
   
           <button type="submit" class="btn primary-btn" 
-            [disabled]="accountForm.invalid || accountForm.untouched"
+            [disabled]="disableSubmit()"
             (click)="onSubmit()"
           >
-            <span>Create</span>
+            <span>Submit</span>
           </button>
         </div>
       </div>
